@@ -1,0 +1,4 @@
+token | Boosts: 2 = user#discrim
+token | Boosts: 1 = user#discrim
+token | Boosts: 2 = user#discrim
+token | Boosts: 0 = user#discrim
