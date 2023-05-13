@@ -8,7 +8,7 @@
 > 2) Navigate into the file
 > 3) Put tokens into tokens.txt
 > 4) Run `pip install -r requirements.txt` 
-> 5) Insert proxy where it says "ENTER PROXY HERE" - Tested Compatible [Proxies](https://myproxies.io)
+> 5) Insert proxy where it says "ENTER PROXY HERE" - [Tested Compatible Proxies](https://myproxies.io)
 > 5) Run `python main.py`
 > 6) Tokens will now be checked & written nicely into a folder
 
