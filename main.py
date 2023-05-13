@@ -1,7 +1,4 @@
-import concurrent.futures
-import requests
-from colorama import Fore, Back, Style
-import datetime
+import concurrent.futures, requests, datetime;from colorama import Fore, Back, Style
 
 def check_token(token):
     availableBoosts = 0
