@@ -19,7 +19,7 @@ def main():
 
 def updatedChecker(session, token):
     now = datetime.datetime.now(datetime.timezone.utc)
-    directory = now.strftime("%d-%m-%Y %H:%M")
+    directory = now.strftime("%d-%m-%Y %H;%M")
     os.makedirs(directory, exist_ok=True)
     headers = {"Authorization": token}
     try:
