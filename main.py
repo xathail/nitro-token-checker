@@ -40,36 +40,33 @@ def updatedChecker(session, token):
         try:
             response = session.get("https://discord.com/api/v9/users/@me/guilds/premium/subscription-slots", headers=headers, proxies=proxy)
             response.raise_for_status()
-            boost_check = response.json()
+            boostCheck = response.json()
         except requests.exceptions.HTTPError:
-            boost_check = []
-        available_boosts = 0
-        for nitro_token in boost_check:
-            cooldown_ends_at = nitro_token.get('cooldown_ends_at')
-            if cooldown_ends_at is None or datetime.datetime.fromisoformat(cooldown_ends_at.split('+')[0] + '+00:00').replace(tzinfo=datetime.timezone.utc) <= now:
-                available_boosts += 1
-        nitro_expires = "Never"
+            boostCheck = []
+        availableBoosts = 0
+        for nitro_token in boostCheck:
+            cooldownEnds = nitro_token.get('cooldown_ends_at')
+            if cooldownEnds is None or datetime.datetime.fromisoformat(cooldownEnds.split('+')[0] + '+00:00').replace(tzinfo=datetime.timezone.utc) <= now:
+                availableBoosts += 1
         p = '| Server Boosted: None '
-        if boost_check and boost_check[0]['premium_guild_subscription'] is not None:
-            p = f"| Server Boosted: {boost_check[0]['premium_guild_subscription']['guild_id']} "
+        nitroExpires = ""
+        ok = str(availableBoosts)+' '+p
+        if boostCheck and boostCheck[0]['premium_guild_subscription'] is not None:
+            p = f"| Server Boosted: {boostCheck[0]['premium_guild_subscription']['guild_id']} "
             try:
                 response = session.get("https://discord.com/api/v9/users/@me/billing/subscriptions", headers=headers, proxies=proxy)
                 response.raise_for_status()
-                nitro_check = response.json()
-                nitro_expires = datetime.datetime.fromisoformat(nitro_check[0]['trial_ends_at']).replace(tzinfo=datetime.timezone.utc).strftime('%d-%m-%Y %H:%M')
+                nitroCheck = response.json()
+                nitroExpires = '| Expires: ' + datetime.datetime.fromisoformat(nitroCheck[0]['trial_ends_at']).replace(tzinfo=datetime.timezone.utc).strftime('%d-%m-%Y %H:%M')
+                ok = str(availableBoosts)+' '+(nitroExpires)+' '+(p)
             except requests.exceptions.HTTPError:
-                pass
-        try:    
-            print(f"\033[32m{token}")
-            with open(f"{directory}/BoostTokens.txt", "a") as f:
-                f.write(f"{token} | Available Boosts: {available_boosts} | Expires: {nitro_expires} {p} | {user['username']}#{user['discriminator']}\n")
-        except:
-            print(f"\033[32m{token}")
-            with open(f"{directory}/BoostTokens.txt", "a") as f:
-                f.write(f"{token} | Boosts: {available_boosts} | Expires: Never {p} | {user['username']}#{user['discriminator']}\n")
+                pass   
+        print(f"\033[32m{token}")
+        with open(f"{directory}/NitroBoostTokens.txt", "a") as f:
+            f.write(f"{token} | Transferrable Boosts: {ok} | {user['username']}#{user['discriminator']}\n")
     else:
         print(f"\033[32m{token}")
-        with open(f"{directory}/NitroTokens.txt", "a") as f:
+        with open(f"{directory}/NitroBasicTokens.txt", "a") as f:
             f.write(f"{token} | {user['username']}#{user['discriminator']}\n")
 
 main()
