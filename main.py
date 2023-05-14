@@ -1,5 +1,5 @@
 import concurrent.futures, requests, datetime, os
-proxy = {'http': 'ENTER PROXY HERE','https': 'ENTER PROXY HERE'}
+proxy = {'http': 'http://user:pass@host:port','https': 'http://user:pass@host:port'}
 
 def main():
     tokens = open("tokens.txt", "r").readlines()
